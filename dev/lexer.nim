@@ -12,7 +12,7 @@ proc init(lexer: Lexer) =
   lexer.tokensSplittedWithSpaces = @[]
   lexer.tokens = @[]
 
-proc splitWithSpaces(lexer:Lexer) =
+proc splitWithSpaces(lexer: Lexer) =
   var isInsideQuotes = false
   var token = ""
   for i, character in lexer.src:
