@@ -40,7 +40,7 @@ proc addToken(lexer: Lexer) =
     lexer.tokens.add(lexer.token)
     lexer.token = Token()
 
-proc lex*(lexer: Lexer, src: string) =
+proc lex*(lexer: Lexer, src: string): seq[Token] =
   lexer.init()
   lexer.src = src
   lexer.splitWithSpaces()
@@ -67,3 +67,4 @@ proc lex*(lexer: Lexer, src: string) =
       lexer.token.value = token
       lexer.token.kind = TokenKind.Identifier
       lexer.addToken()
+  return lexer.tokens
