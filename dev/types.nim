@@ -3,6 +3,7 @@ type TokenKind* {.pure.} = enum
   Def = "def"
   Colon = ":"
   Equal = "="
+  ColonEqual = $Colon & $Equal
   Newline = "\n"
   Number
 

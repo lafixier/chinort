@@ -59,6 +59,10 @@ proc lex*(lexer: Lexer, src: string): seq[Token] =
       lexer.token.value = token
       lexer.token.kind = TokenKind.Equal
       lexer.addToken()
+    of $TokenKind.ColonEqual:
+      lexer.token.value = token
+      lexer.token.kind = TokenKind.ColonEqual
+      lexer.addToken()
     of "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
       lexer.token.value = token
       lexer.token.kind = TokenKind.Number
