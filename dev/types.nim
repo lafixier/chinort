@@ -1,11 +1,11 @@
 type TokenKind* {.pure.} = enum
-  Identifier
+  Identifier = "[a-zA-Z_]\\w*"
   Def = "def"
   Colon = ":"
   Equal = "="
   ColonEqual = $Colon & $Equal
   Newline = "\n"
-  Number
+  Number = "\\d"
 
 
 type Token* = object
