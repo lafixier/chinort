@@ -11,3 +11,8 @@ type TokenKind* {.pure.} = enum
 type Token* = object
   value*: string
   kind*: TokenKind
+
+
+type SyntaxRule* = object
+  name*: string
+  pattern*: seq[TokenKind]
