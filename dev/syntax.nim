@@ -1,7 +1,7 @@
 import types
 
 
-let SyntaxRules* = @[
+let syntaxRules* = @[
   SyntaxRule(
     name: "VariableDefinition",
     pattern: @[

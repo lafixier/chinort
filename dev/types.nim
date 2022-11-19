@@ -1,3 +1,5 @@
+import tables
+
 type TokenKind* {.pure.} = enum
   Identifier = "[a-zA-Z_]\\w*"
   Def = "def"
@@ -24,4 +26,19 @@ type ReadToken* = object
   token*: Token
   patternToken*: PatternToken
 
-type Sentence* = seq[ReadToken]
+type Syntax* = object
+  rule*: SyntaxRule
+  attributes*: Table[string, string]
+
+type Node* = object
+  nodeId*: string
+  parentNodesIds*: seq[string]
+  syntax*: Syntax
+  childNodes*: seq[Node]
+
+type Ast* = object
+  root*: seq[Node]
+
+type Sentence* = object
+  readTokens*: seq[ReadToken]
+  syntaxRule*: SyntaxRule
