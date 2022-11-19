@@ -12,7 +12,16 @@ type Token* = object
   value*: string
   kind*: TokenKind
 
+type PatternToken* = object
+  kind*: TokenKind
+  attributeName*: string
 
 type SyntaxRule* = object
   name*: string
-  pattern*: seq[TokenKind]
+  pattern*: seq[PatternToken]
+
+type ReadToken* = object
+  token*: Token
+  patternToken*: PatternToken
+
+type Sentence* = seq[ReadToken]

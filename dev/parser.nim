@@ -7,7 +7,7 @@ import
 type Parser* = ref object
   tokens: seq[Token]
   syntaxRules: seq[SyntaxRule]
-  sentences: seq[seq[Token]]
+  sentences: seq[Sentence]
 
 proc init(parser: Parser) =
   parser.syntaxRules = SyntaxRules
@@ -15,16 +15,17 @@ proc init(parser: Parser) =
 
 proc readTokens(parser: Parser) =
   var maybeMatchedSyntaxRule: SyntaxRule
-  var sentence: seq[Token] = @[]
+  var sentence: Sentence = @[]
   for i, token in parser.tokens:
     if i == 0:
       for syntaxRule in parser.syntaxRules:
-        if token.kind == syntaxRule.pattern[0]:
+        if token.kind == syntaxRule.pattern[0].kind:
           maybeMatchedSyntaxRule = syntaxRule
-    if token.kind == maybeMatchedSyntaxRule.pattern[i]:
-      sentence.add(token)
+    let patternToken = maybeMatchedSyntaxRule.pattern[i]
+    if token.kind == patternToken.kind:
+      sentence.add(ReadToken(token: token, patternToken: patternToken))
     else:
-      echo fmt"Error: Expected {maybeMatchedSyntaxRule.pattern[i]}, but {token.kind} was given."
+      echo fmt"Error: Expected {patternToken.kind}, but {token.kind} was given."
       return
   # 暫定処置
   parser.sentences.add(sentence)

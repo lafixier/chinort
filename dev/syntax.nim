@@ -4,6 +4,10 @@ import types
 let SyntaxRules* = @[
   SyntaxRule(
     name: "VariableDefinition",
-    pattern: @[Def, Identifier, ColonEqual, Number]
+    pattern: @[
+      PatternToken(kind: TokenKind.Def, attributeName: ""),
+      PatternToken(kind: TokenKind.Identifier, attributeName: "variableName"),
+      PatternToken(kind: TokenKind.ColonEqual, attributeName: ""),
+      PatternToken(kind: TokenKind.Number, attributeName: "value"), ]
   )
 ]
