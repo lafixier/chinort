@@ -1,8 +1,11 @@
 import lexer
+import parser
 
 proc main() =
   let lexer = Lexer()
-  const src = "def a : = 1"
-  lexer.lex(src)
+  let parser = Parser()
+  const src = "def a := 1"
+  let tokens = lexer.lex(src)
+  parser.parse(tokens)
 
 main()
