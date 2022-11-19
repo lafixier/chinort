@@ -1,5 +1,6 @@
-import lexer
-import parser
+import
+  lexer,
+  parser
 
 proc main() =
   let lexer = Lexer()
