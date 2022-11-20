@@ -42,3 +42,6 @@ type Ast* = object
 type Sentence* = object
   readTokens*: seq[ReadToken]
   syntaxRule*: SyntaxRule
+
+type TargetLangs* = enum
+  Nim
