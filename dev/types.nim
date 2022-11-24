@@ -1,6 +1,7 @@
 import tables
 
 type TokenKind* {.pure.} = enum
+  NotDetermined
   Identifier = "[a-zA-Z_]\\w*"
   Def = "def"
   Colon = ":"
