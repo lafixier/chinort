@@ -1,6 +1,23 @@
 import types
 
 
+proc determineTokenKind(tokenValue: string): TokenKind =
+  case tokenValue:
+  of $TokenKind.Newline:
+    TokenKind.Newline
+  of $TokenKind.Def:
+    TokenKind.Def
+  of $TokenKind.Colon:
+    TokenKind.Colon
+  of $TokenKind.Equal:
+    TokenKind.Equal
+  of $TokenKind.ColonEqual:
+    TokenKind.ColonEqual
+  of "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
+    TokenKind.Number
+  else:
+    TokenKind.Identifier
+
 type Lexer* = ref object
   symbols: seq[char]
   src: string
@@ -17,8 +34,9 @@ proc init(lexer: Lexer) =
 
 proc addToken(lexer: Lexer) =
   if lexer.token.value.len() != 0:
+    lexer.token.kind = determineTokenKind(lexer.token.value)
     lexer.tokens.add(lexer.token)
-    lexer.token = Token(kind: TokenKind.NotDetermined)
+    lexer.token = Token(value: "", kind: TokenKind.NotDetermined)
 
 proc splitIntoTokens(lexer: Lexer) =
   var isPreviousTokenSymbol = false
@@ -54,30 +72,8 @@ proc splitIntoTokens(lexer: Lexer) =
       if i == lexer.src.len() - 1:
         lexer.addToken()
 
-proc addKinds2Tokens(lexer: Lexer) =
-  proc discrimeTokenKind(tokenValue: string): TokenKind =
-    case tokenValue:
-    of $TokenKind.Newline:
-      TokenKind.Newline
-    of $TokenKind.Def:
-      TokenKind.Def
-    of $TokenKind.Colon:
-      TokenKind.Colon
-    of $TokenKind.Equal:
-      TokenKind.Equal
-    of $TokenKind.ColonEqual:
-      TokenKind.ColonEqual
-    of "0", "1", "2", "3", "4", "5", "6", "7", "8", "9":
-      TokenKind.Number
-    else:
-      TokenKind.Identifier
-  for i, token in lexer.tokens:
-    lexer.tokens[i].kind = discrimeTokenKind(token.value)
-
-
 proc lex*(lexer: Lexer, src: string): seq[Token] =
   lexer.init()
   lexer.src = src
   lexer.splitIntoTokens()
-  lexer.addKinds2Tokens()
   return lexer.tokens
