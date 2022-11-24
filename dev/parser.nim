@@ -29,7 +29,7 @@ proc readTokens(parser: Parser) =
           maybeMatchedSyntaxRule = syntaxRule
     let patternToken = maybeMatchedSyntaxRule.pattern[i]
     if token.kind == patternToken.kind:
-      sentence.readTokens.add(ReadToken(token: token,
+      sentence.readTokens.add(TokenRead(token: token,
           patternToken: patternToken))
       sentence.syntaxRule = maybeMatchedSyntaxRule
     else:

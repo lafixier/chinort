@@ -22,7 +22,7 @@ type SyntaxRule* = object
   name*: string
   pattern*: seq[PatternToken]
 
-type ReadToken* = object
+type TokenRead* = object
   token*: Token
   patternToken*: PatternToken
 
@@ -40,7 +40,7 @@ type Ast* = object
   root*: seq[Node]
 
 type Sentence* = object
-  readTokens*: seq[ReadToken]
+  readTokens*: seq[TokenRead]
   syntaxRule*: SyntaxRule
 
 type TargetLangs* = enum
