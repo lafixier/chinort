@@ -69,3 +69,5 @@ let lowerCaseAlphabetParser*: ParserFunc =
     )
 
 let alphabetParser*: ParserFunc = upperCaseAlphabetParser | lowerCaseAlphabetParser
+
+let alphabetsParser*: ParserFunc = alphabetParser.repeatOperator(1, -1)
