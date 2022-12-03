@@ -18,7 +18,7 @@ let orOperator*: OrOperatorFunc =
       )
 
 let repeatOperator*: RepeatOperatorFunc =
-  proc(parser: ParserFunc, min: int, max: int): ParserFunc =
+  func(parser: ParserFunc, min: int, max: int): ParserFunc =
     return proc (src: ParserFuncSrc): ParserFuncDest =
       var parsed: seq[string] = @[]
       var dest = parser(src)
