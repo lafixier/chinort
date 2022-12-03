@@ -42,3 +42,27 @@ let specifiedStr*: SpecifiedStrFunc =
         isSucceeded: false,
         remained: src
       )
+
+let upperCaseAlphabet*: ParserFunc =
+  proc(src: ParserFuncSrc): ParserFuncDest =
+    let dest = anyChar(src)
+    if dest.parsed.len() > 0:
+      let c = dest.parsed[0]
+      if c.isUpperAscii():
+        return dest
+    return ParserFuncDest(
+      isSucceeded: false,
+      remained: src
+    )
+
+let lowerCaseAlphabet*: ParserFunc =
+  proc(src: ParserFuncSrc): ParserFuncDest =
+    let dest = anyChar(src)
+    if dest.parsed.len() > 0:
+      let c = dest.parsed[0]
+      if c.isLowerAscii():
+        return dest
+    return ParserFuncDest(
+      isSucceeded: false,
+      remained: src
+    )
