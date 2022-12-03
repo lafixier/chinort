@@ -1,5 +1,6 @@
 import
   strutils,
+  operators,
   ../types
 
 
@@ -66,3 +67,5 @@ let lowerCaseAlphabetParser*: ParserFunc =
       isSucceeded: false,
       remained: src
     )
+
+let alphabetParser*: ParserFunc = upperCaseAlphabetParser | lowerCaseAlphabetParser
