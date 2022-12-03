@@ -87,3 +87,15 @@ let digitParser*: ParserFunc =
       isSucceeded: false,
       remained: src
     )
+
+let notZeroParser*: ParserFunc =
+  proc(src: ParserFuncSrc): ParserFuncDest =
+    let dest = digitParser(src)
+    if not dest.isSucceeded or dest.parsed == "0":
+      return ParserFuncDest(
+        isSucceeded: false,
+        remained: src
+      )
+    return dest
+
+let intengerParser*: ParserFunc = notZeroParser +~ digitParser.repeatOperator(0, -1)
