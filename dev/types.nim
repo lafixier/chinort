@@ -46,3 +46,14 @@ type Sentence* = object
 
 type TargetLangs* = enum
   Nim
+
+type ParserFuncSrc* = seq[string]
+
+type ParserFuncDest* = object
+  isSucceeded*: bool
+  parsed*: string
+  remained*: ParserFuncSrc
+
+type ParserFunc* = proc(src: ParserFuncSrc): ParserFuncDest
+
+type SpecifiedCharFunc* = proc(c: char): ParserFunc
