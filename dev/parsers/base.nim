@@ -71,3 +71,19 @@ let lowerCaseAlphabetParser*: ParserFunc =
 let alphabetParser*: ParserFunc = upperCaseAlphabetParser | lowerCaseAlphabetParser
 
 let alphabetsParser*: ParserFunc = alphabetParser.repeatOperator(1, -1)
+
+let digitParser*: ParserFunc =
+  proc(src: ParserFuncSrc): ParserFuncDest =
+    let dest = anyCharParser(src)
+    if dest.parsed.len() > 0:
+      let c = dest.parsed[0]
+      if c.isDigit():
+        return ParserFuncDest(
+          isSucceeded: true,
+          parsed: $c,
+          remained: dest.remained
+        )
+    return ParserFuncDest(
+      isSucceeded: false,
+      remained: src
+    )
