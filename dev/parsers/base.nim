@@ -1,4 +1,5 @@
 import
+  strutils,
   ../types
 
 
@@ -26,3 +27,18 @@ let specifiedChar*: SpecifiedCharFunc =
         )
       if dest.parsed == $c:
         return dest
+
+let specifiedStr*: SpecifiedStrFunc =
+  func(s: string): ParserFunc =
+    return proc (src: ParserFuncSrc): ParserFuncDest =
+      if src.len() >= s.len():
+        if src[0..s.len()-1].join("") == s:
+          return ParserFuncDest(
+            isSucceeded: true,
+            parsed: s,
+            remained: src[s.len()..^1]
+          )
+      return ParserFuncDest(
+        isSucceeded: false,
+        remained: src
+      )
