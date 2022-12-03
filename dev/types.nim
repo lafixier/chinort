@@ -59,3 +59,5 @@ type ParserFunc* = proc(src: ParserFuncSrc): ParserFuncDest
 type SpecifiedCharFunc* = proc(c: char): ParserFunc
 
 type SpecifiedStrFunc* = proc(s: string): ParserFunc
+
+type OrOperatorFunc* = proc(parser: seq[ParserFunc]): ParserFunc
