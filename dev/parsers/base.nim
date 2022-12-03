@@ -3,7 +3,7 @@ import
   ../types
 
 
-let anyChar*: ParserFunc =
+let anyCharParser*: ParserFunc =
   proc(src: ParserFuncSrc): ParserFuncDest =
     if src.len() > 0:
       return ParserFuncDest(
@@ -16,10 +16,10 @@ let anyChar*: ParserFunc =
       remained: src
     )
 
-let specifiedChar*: SpecifiedCharFunc =
+let specifiedCharParser*: SpecifiedCharFunc =
   func(c: char): ParserFunc =
     return proc (src: ParserFuncSrc): ParserFuncDest =
-      let dest = anyChar(src)
+      let dest = anyCharParser(src)
       if not dest.isSucceeded or dest.parsed != $c:
         return ParserFuncDest(
           isSucceeded: false,
@@ -28,7 +28,7 @@ let specifiedChar*: SpecifiedCharFunc =
       if dest.parsed == $c:
         return dest
 
-let specifiedStr*: SpecifiedStrFunc =
+let specifiedStrParser*: SpecifiedStrFunc =
   func(s: string): ParserFunc =
     return proc (src: ParserFuncSrc): ParserFuncDest =
       if src.len() >= s.len():
@@ -43,9 +43,9 @@ let specifiedStr*: SpecifiedStrFunc =
         remained: src
       )
 
-let upperCaseAlphabet*: ParserFunc =
+let upperCaseAlphabetParser*: ParserFunc =
   proc(src: ParserFuncSrc): ParserFuncDest =
-    let dest = anyChar(src)
+    let dest = anyCharParser(src)
     if dest.parsed.len() > 0:
       let c = dest.parsed[0]
       if c.isUpperAscii():
@@ -55,9 +55,9 @@ let upperCaseAlphabet*: ParserFunc =
       remained: src
     )
 
-let lowerCaseAlphabet*: ParserFunc =
+let lowerCaseAlphabetParser*: ParserFunc =
   proc(src: ParserFuncSrc): ParserFuncDest =
-    let dest = anyChar(src)
+    let dest = anyCharParser(src)
     if dest.parsed.len() > 0:
       let c = dest.parsed[0]
       if c.isLowerAscii():
