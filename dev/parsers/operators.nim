@@ -5,6 +5,8 @@ import
 
 template `|`*(a, b: ParserFunc): ParserFunc = orOperator(@[a, b])
 
+template `+~`*(a, b: ParserFunc): ParserFunc = joinOperator(@[a, b])
+
 let orOperator*: OrOperatorFunc =
   func(parsers: seq[ParserFunc]): ParserFunc =
     return proc (src: ParserFuncSrc): ParserFuncDest =
@@ -46,5 +48,25 @@ let repeatOperator*: RepeatOperatorFunc =
       return ParserFuncDest(
         isSucceeded: true,
         parsed: parsed.join(""),
+        remained: remained
+      )
+
+let joinOperator*: JoinOperatorFunc =
+  func(parsers: seq[ParserFunc]): ParserFunc =
+    return proc (src: ParserFuncSrc): ParserFuncDest =
+      var parsed = ""
+      var remained = src
+      for parser in parsers:
+        let dest = parser(remained)
+        if not dest.isSucceeded:
+          return ParserFuncDest(
+            isSucceeded: false,
+            remained: src
+          )
+        parsed.add(dest.parsed)
+        remained = dest.remained
+      return ParserFuncDest(
+        isSucceeded: true,
+        parsed: parsed,
         remained: remained
       )

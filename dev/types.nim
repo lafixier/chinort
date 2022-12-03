@@ -64,3 +64,5 @@ type OrOperatorFunc* = proc(parsers: seq[ParserFunc]): ParserFunc
 
 type RepeatOperatorFunc* =
   proc(parser: ParserFunc, min: int, max: int): ParserFunc
+
+type JoinOperatorFunc* = proc(parsers: seq[ParserFunc]): ParserFunc
