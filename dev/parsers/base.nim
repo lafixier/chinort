@@ -100,7 +100,9 @@ let notZeroParser*: ParserFunc =
       )
     return dest
 
-let intengerParser*: ParserFunc = notZeroParser +~ digitParser.repeatOperator(0, -1)
+let intengerParser*: ParserFunc =
+  digitParser |
+  notZeroParser +~ digitParser.repeatOperator(0, -1)
 
 let dotParser*: ParserFunc = specifiedCharParser('.')
 
