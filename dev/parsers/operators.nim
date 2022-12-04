@@ -76,3 +76,16 @@ let joinOperator*: JoinOperatorFunc =
         parsed: parsed,
         remained: remained
       )
+
+let notOperator*: NotOperatorFunc =
+  func(parser: ParserFunc): ParserFunc =
+    return proc (src: ParserFuncSrc): ParserFuncDest =
+      let dest = parser(src)
+      if dest.isSucceeded:
+        return ParserFuncDest(
+          isSucceeded: false
+        )
+      return ParserFuncDest(
+        isSucceeded: true,
+        remained: src
+      )
