@@ -25,6 +25,12 @@ let repeatOperator*: RepeatOperatorFunc =
       var parsed: seq[string] = @[]
       var dest = parser(src)
       if not dest.isSucceeded:
+        if min == 0:
+          return ParserFuncDest(
+            isSucceeded: true,
+            parsed: parsed.join(""),
+            remained: src
+          )
         return ParserFuncDest(
           isSucceeded: false,
           parsed: parsed.join(""),
