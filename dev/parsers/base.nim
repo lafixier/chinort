@@ -101,3 +101,15 @@ let notZeroParser*: ParserFunc =
     return dest
 
 let intengerParser*: ParserFunc = notZeroParser +~ digitParser.repeatOperator(0, -1)
+
+let dotParser*: ParserFunc = specifiedCharParser('.')
+
+let floatParser*: ParserFunc =
+  (
+    notZeroParser.notOperator() |
+    (
+      notZeroParser +~ digitParser.repeatOperator(0, -1)
+    )
+  ) +~
+  dotParser +~
+  digitParser.repeatOperator(1, -1)
