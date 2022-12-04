@@ -88,6 +88,8 @@ let digitParser*: ParserFunc =
       remained: src
     )
 
+let alphabetOrDigitParser*: ParserFunc = alphabetParser | digitParser
+
 let notZeroParser*: ParserFunc =
   proc(src: ParserFuncSrc): ParserFuncDest =
     let dest = digitParser(src)
