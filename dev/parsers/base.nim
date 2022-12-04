@@ -100,13 +100,19 @@ let notZeroParser*: ParserFunc =
       )
     return dest
 
+let minusParser*: ParserFunc = specifiedCharParser('-')
+
 let intengerParser*: ParserFunc =
-  digitParser |
-  notZeroParser +~ digitParser.repeatOperator(0, -1)
+  minusParser.repeatOperator(0, 1) +~
+  (
+    digitParser |
+    notZeroParser +~ digitParser.repeatOperator(0, -1)
+  )
 
 let dotParser*: ParserFunc = specifiedCharParser('.')
 
 let floatParser*: ParserFunc =
+  minusParser.repeatOperator(0, 1) +~
   (
     notZeroParser.notOperator() |
     (
