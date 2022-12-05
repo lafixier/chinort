@@ -121,3 +121,5 @@ let floatParser*: ParserFunc =
   ) +~
   dotParser +~
   digitParser.repeatOperator(1, -1)
+
+let numberParser*: ParserFunc = intengerParser | floatParser
