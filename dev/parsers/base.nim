@@ -123,3 +123,7 @@ let floatParser*: ParserFunc =
   digitParser.repeatOperator(1, -1)
 
 let numberParser*: ParserFunc = intengerParser | floatParser
+
+let whitespaceParser*: ParserFunc = specifiedCharParser(' ')
+
+let whitespacesParser*: ParserFunc = whitespaceParser.repeatOperator(1, -1)
