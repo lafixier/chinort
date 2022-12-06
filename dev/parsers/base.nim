@@ -127,3 +127,5 @@ let numberParser*: ParserFunc = intengerParser | floatParser
 let whitespaceParser*: ParserFunc = specifiedCharParser(' ')
 
 let whitespacesParser*: ParserFunc = whitespaceParser.repeatOperator(1, -1)
+
+let newlineParser*: ParserFunc = specifiedCharParser('\n')
