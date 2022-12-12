@@ -1,0 +1,30 @@
+{
+    "syntaxType": "Program",
+    "nodeId": "root",
+    "parentNodeId": null,
+    "childNodes": [
+        {
+            "syntaxType": "VariableDefinition",
+            "nodeId": "foo",
+            "parentNodeId": "root",
+            "attributes": {
+                "reAssignable": false,
+                "mutable": false,
+                "variable": {
+                    "name": "message",
+                    "typeName": "auto"
+                },
+                "value": "\"Hello, World!\""
+            }
+        },
+        {
+            "syntaxType": "FunctionCall",
+            "nodeId": "bar",
+            "parentNodeId": "root",
+            "attributes": {
+                "functionName": "print",
+                "arguments": ["message"]
+            }
+        }
+    ]
+}

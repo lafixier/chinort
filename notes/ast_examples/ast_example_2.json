@@ -1,0 +1,36 @@
+{
+    "root": [
+        {
+            "nodeId": "foo",
+            "parentNodesIds": ["root"],
+            "syntax": {
+                "type": "VariableDefinition",
+                "attributes": {
+                    "variableName": "a",
+                    "value": "1"
+                }
+            }
+        },
+        {
+            "nodeId": "bar",
+            "parentNodesIds": ["root"],
+            "syntax": {
+                "type": "IfStatement",
+                "attributes": {
+                    "condition": "a == 1",
+                    "whenTrue": {
+                        "nodeId": "baz",
+                        "parentNodesIds": ["bar", "root"],
+                        "syntax": {
+                            "type": "FunctionCall",
+                            "attributes": {
+                                "functionName": "print",
+                                "parameters": ["a is 1"]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
