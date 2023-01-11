@@ -1,0 +1,15 @@
+{
+    "type": "expression",
+    "attributes": {
+        "operator": "+",
+        "left": 1,
+        "right": {
+            "type": "expression",
+            "attributes": {
+                "operator": "*",
+                "left": 2,
+                "right": 3
+            }
+        }
+    }
+}

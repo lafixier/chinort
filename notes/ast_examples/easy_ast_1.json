@@ -1,0 +1,8 @@
+{
+    "type": "expression",
+    "attributes": {
+        "operator": "+",
+        "left": 1,
+        "right": 2
+    }
+}

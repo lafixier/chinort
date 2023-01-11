@@ -1,0 +1,31 @@
+{
+    "type": "program",
+    "body": [
+        {
+            "type": "variableDefinition",
+            "definitions": {
+                "variableName": "a",
+                "variableValue": {
+                    "type": "expression",
+                    "operator": "+",
+                    "left": 1,
+                    "right": 2
+                }
+            }
+        },
+        {
+            "type": "IfStatement",
+            "condition": {
+                "type": "expression",
+                "operator": "==",
+                "left": "a",
+                "right": 3
+            },
+            "then": {
+                "type": "funcCall",
+                "funcName": "print",
+                "funcArgs": ["a is 3"]
+            }
+        }
+    ]
+}
