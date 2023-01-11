@@ -1,8 +1,43 @@
 import
+  json,
   strutils,
+  tables,
   operators,
   ../types
 
+
+let setAttribute*: SetAttrributeFunc =
+  func(parser: ParserFunc, attributeName: string,
+      nodeType: NodeType): ParserFunc =
+    return proc(src: ParserFuncSrc): ParserFuncDest =
+      let dest = parser(src)
+      if dest.isSucceeded:
+        var newDest = dest
+        if dest.node.attributes == Attributes():
+          newDest.attributes[attributeName] = Node(
+            nodeType: nodeType,
+            value: dest.parsed
+          )
+        else:
+          newDest.attributes[attributeName] = dest.node
+        echo "Set Attribute: ", (%*newDest).pretty()
+        return newDest
+      return dest
+
+let returnNode*: ReturnNodeFunc =
+  func(parser: ParserFunc, nodeType: NodeType): ParserFunc =
+    return proc(src: ParserFuncSrc): ParserFuncDest =
+      let dest = parser(src)
+      if dest.isSucceeded:
+        var newDest = dest
+        newDest.node = Node(
+          nodeType: nodeType,
+          attributes: dest.attributes
+        )
+        newDest.attributes = Attributes()
+        echo "Return Node: ", (%*newDest).pretty()
+        return newDest
+      return dest
 
 let anyCharParser*: ParserFunc =
   proc(src: ParserFuncSrc): ParserFuncDest =

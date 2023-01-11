@@ -1,11 +1,22 @@
 import
+  json,
   strutils,
+  tables,
   ../types
 
 
 template `|`*(a, b: ParserFunc): ParserFunc = orOperator(@[a, b])
 
 template `+~`*(a, b: ParserFunc): ParserFunc = joinOperator(@[a, b])
+
+proc mergeTwoTables[T, S](a, b: Table[T, S]): Table[T, S] =
+  # echo (%*a).pretty()
+  # echo (%*b).pretty()
+  var merged = a
+  for key, value in b.pairs:
+    merged[key] = value
+  echo "Merged Table: ", (%*merged).pretty()
+  return merged
 
 let orOperator*: OrOperatorFunc =
   func(parsers: seq[ParserFunc]): ParserFunc =
@@ -29,7 +40,9 @@ let repeatOperator*: RepeatOperatorFunc =
           return ParserFuncDest(
             isSucceeded: true,
             parsed: parsed.join(""),
-            remained: src
+            remained: src,
+            attributes: dest.attributes,
+            node: dest.node
           )
         return ParserFuncDest(
           isSucceeded: false,
@@ -54,7 +67,9 @@ let repeatOperator*: RepeatOperatorFunc =
       return ParserFuncDest(
         isSucceeded: true,
         parsed: parsed.join(""),
-        remained: remained
+        remained: remained,
+        attributes: dest.attributes,
+        node: dest.node
       )
 
 let joinOperator*: JoinOperatorFunc =
@@ -62,6 +77,8 @@ let joinOperator*: JoinOperatorFunc =
     return proc (src: ParserFuncSrc): ParserFuncDest =
       var parsed = ""
       var remained = src
+      var attributes = Attributes()
+      var node = Node()
       for parser in parsers:
         let dest = parser(remained)
         if not dest.isSucceeded:
@@ -71,10 +88,14 @@ let joinOperator*: JoinOperatorFunc =
           )
         parsed.add(dest.parsed)
         remained = dest.remained
+        attributes = mergeTwoTables(attributes, dest.attributes)
+        node = dest.node
       return ParserFuncDest(
         isSucceeded: true,
         parsed: parsed,
-        remained: remained
+        remained: remained,
+        attributes: attributes,
+        node: node
       )
 
 let notOperator*: NotOperatorFunc =
@@ -87,5 +108,7 @@ let notOperator*: NotOperatorFunc =
         )
       return ParserFuncDest(
         isSucceeded: true,
-        remained: src
+        remained: src,
+        attributes: dest.attributes,
+        node: dest.node
       )
