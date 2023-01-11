@@ -164,3 +164,21 @@ let whitespaceParser*: ParserFunc = specifiedCharParser(' ')
 let whitespacesParser*: ParserFunc = whitespaceParser.repeatOperator(1, -1)
 
 let newlineParser*: ParserFunc = specifiedCharParser('\n')
+
+let identifierParser*: ParserFunc =
+  alphabetsParser +~ alphabetOrDigitParser.repeatOperator(0, -1)
+
+let operatorParser*: ParserFunc =
+  specifiedCharParser('+') |
+  specifiedCharParser('-') |
+  specifiedCharParser('*') |
+  specifiedCharParser('/')
+
+let expressionParser*: ParserFunc =
+  (
+    numberParser.setAttribute("left", NodeType.Literal) +~
+      whitespaceParser.repeatOperator(0, -1) +~
+    operatorParser.setAttribute("operator", NodeType.Operator) +~
+      whitespaceParser.repeatOperator(0, -1) +~
+    numberParser.setAttribute("right", NodeType.Literal)
+  ).returnNode(NodeType.Expression)
