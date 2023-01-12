@@ -15,6 +15,7 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "scriptname": "husky install"
+    "scriptname": "husky install",
+    "format": "./nim_fmt.py"
   }
 }
