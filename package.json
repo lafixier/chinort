@@ -16,6 +16,7 @@
   "scripts": {
     "prepare": "husky install",
     "scriptname": "husky install",
-    "format": "./nim_fmt.py"
+    "format": "./nim_fmt.py",
+    "test": "testament p 'tests/*/*.nim'"
   }
 }
